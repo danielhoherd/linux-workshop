@@ -6,7 +6,7 @@ help: ## Print Makefile help
 
 
 SUDO            = $(shell which sudo)
-IMAGE_NAME     ?= ubuntu-xenial-workstation
+IMAGE_NAME     ?= danielhoherd/ubuntu-xenial-workstation
 CONTAINER_NAME ?= ${IMAGE_NAME}
 NO_CACHE       ?= false
 ORG_PREFIX     ?= danielhoherd
