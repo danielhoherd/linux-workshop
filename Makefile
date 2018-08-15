@@ -6,7 +6,7 @@ help: ## Print Makefile help
 
 
 SUDO            = $(shell which sudo)
-IMAGE_NAME     ?= danielhoherd/uxw
+IMAGE_NAME     ?= danielhoherd/uw
 CONTAINER_NAME ?= ${IMAGE_NAME}
 NO_CACHE       ?= false
 ORG_PREFIX     ?= danielhoherd

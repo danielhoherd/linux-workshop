@@ -1,11 +1,11 @@
-# Ubuntu Xenial Workstation (uxw)
+# Ubuntu Workstation (uw)
 
-A simple ubuntu:xenial image with some additional packages installed.
+A simple Ubuntu image with some additional packages installed.
 
-- <https://hub.docker.com/r/danielhoherd/uxw/>
+- <https://hub.docker.com/r/danielhoherd/uw/>
 
 # Usage
 
 ```
-docker run -ti --rm danielhoherd/ubuntu-xenial-workstation /bin/bash
+docker run -ti --rm danielhoherd/uw /bin/bash
 ```
