@@ -10,6 +10,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
       git \
       iputils-ping \
       make \
+      mtr-tiny \
       pigz \
       pv \
       python3 \
