@@ -4,6 +4,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get install -y \
       bc \
+      bind9-host \
       curl \
       fping \
       git \
