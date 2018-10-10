@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:bionic
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get dist-upgrade -y && \
