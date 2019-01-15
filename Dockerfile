@@ -30,3 +30,6 @@ ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 RUN locale-gen en_US en_US.UTF-8 && \
     dpkg-reconfigure locales
+
+# Required for tmate
+RUN ssh-keygen -t ed25519 -f "$HOME"/.ssh/id_ed25519 -N ''
