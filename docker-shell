@@ -4,4 +4,11 @@
 readonly IMAGE="$1"
 shift
 
+usage() { echo "Runs a throwaway docker container with optional image and commands.
+
+${0##*/} [docker-image] [command]"
+}
+
+if [ "${IMAGE}" == "-h" ] ; then usage ; exit 1 ; fi ;
+
 docker run --rm -t -i --mount type=bind,src="$PWD",dst="/docker-share" "${IMAGE:-danielhoherd/uw}" "${@:-bash}"
