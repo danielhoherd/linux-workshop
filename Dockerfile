@@ -1,6 +1,7 @@
 FROM ubuntu:bionic
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get install -y \
       bc \
@@ -9,6 +10,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
       fping \
       git \
       iputils-ping \
+      locales \
       make \
       mtr-tiny \
       pigz \
@@ -17,8 +19,14 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
       python3-pip \
       silversearcher-ag \
       speedtest-cli \
+      tmate \
       tree \
       vim \
       wget \
       xtail && \
     rm -rf /var/lib/apt/lists/*
+
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+RUN locale-gen en_US en_US.UTF-8 && \
+    dpkg-reconfigure locales
