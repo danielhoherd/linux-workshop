@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.0.0
+    rev: v2.1.0
     hooks:
       - id: check-byte-order-marker
       - id: check-case-conflict
@@ -39,6 +39,6 @@ repos:
         entry: perl -pi* -e 's/\xe2\x80\x93/-/g && ($t = 1) && print STDERR $_; END{{exit $t}}'
         exclude: '.*\.(a|png|jpg|jpeg|gif)'
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.13.0
+    rev: v1.15.0
     hooks:
       - id: yamllint
