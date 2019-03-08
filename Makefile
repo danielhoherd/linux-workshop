@@ -23,8 +23,6 @@ all: build
 .PHONY: push
 push: ## Push built container to docker hub
 	docker push ${IMAGE_NAME}
-	docker push ${IMAGE_NAME}:latest
-	docker push ${IMAGE_NAME}:${BUILD_DATE}
 
 .PHONY: build
 build: ## Build the Dockerfile found in PWD
