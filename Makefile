@@ -14,6 +14,7 @@ GIT_BRANCH      = $(shell git rev-parse --abbrev-ref HEAD)
 GIT_SHA_SHORT   = $(shell if [ ! -z "`git status --porcelain`" ] ; then echo "DIRTY" ; else git rev-parse --short HEAD ; fi)
 GIT_SHA_LONG    = $(shell if [ ! -z "`git status --porcelain`" ] ; then echo "DIRTY" ; else git rev-parse HEAD ; fi)
 BUILD_TIME      = $(shell date '+%s')
+BUILD_DATE      = $(shell date '+%F')
 RESTART        ?= always
 
 .PHONY: all
@@ -23,12 +24,15 @@ all: build
 push: ## Push built container to docker hub
 	docker push ${IMAGE_NAME}
 	docker push ${IMAGE_NAME}:latest
+	docker push ${IMAGE_NAME}:${BUILD_DATE}
 
 .PHONY: build
 build: ## Build the Dockerfile found in PWD
 	docker build --no-cache=${NO_CACHE} \
 		-t "${IMAGE_NAME}:latest" \
 		-t "${IMAGE_NAME}:${GIT_BRANCH}-${GIT_SHA_SHORT}" \
+		-t "${IMAGE_NAME}:${BUILD_TIME}" \
+		-t "${IMAGE_NAME}:${BUILD_DATE}" \
 		--label "${ORG_PREFIX}.repo.origin=${GIT_ORIGIN}" \
 		--label "${ORG_PREFIX}.repo.branch=${GIT_BRANCH}" \
 		--label "${ORG_PREFIX}.repo.commit=${GIT_SHA_LONG}" \
