@@ -9,6 +9,7 @@ RUN apt-get update && \
       curl \
       fping \
       git \
+      iproute2 \
       iputils-ping \
       locales \
       make \
