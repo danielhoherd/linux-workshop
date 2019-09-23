@@ -81,6 +81,10 @@ rm: stop ## Delete deployed container
 	-docker rm --force ${CONTAINER_NAME}
 	-docker rm --force ${CONTAINER_NAME}-debug
 
+.PHONY: pull
+pull: ## Pull the latest container
+	docker pull "${IMAGE_NAME}"
+
 .PHONY: logs
 logs: ## View the last 30 minutes of log entries
 	docker logs --since 30m ${CONTAINER_NAME}
