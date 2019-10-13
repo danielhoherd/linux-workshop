@@ -14,6 +14,7 @@ RUN apt-get update && \
       locales \
       make \
       mtr-tiny \
+      net-tools \
       pigz \
       pv \
       python3 \
