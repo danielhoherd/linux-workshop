@@ -83,6 +83,7 @@ rm: stop ## Delete deployed container
 
 .PHONY: pull
 pull: ## Pull the latest container
+	docker pull $$(awk '/^FROM/ {print $$2 ; exit ;}' Dockerfile)
 	docker pull "${IMAGE_NAME}"
 
 .PHONY: logs
