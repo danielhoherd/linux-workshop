@@ -7,6 +7,7 @@ RUN apt-get update && \
       bc \
       bind9-host \
       curl \
+      dnsutils \
       fping \
       git \
       iproute2 \
