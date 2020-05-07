@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
@@ -20,7 +20,7 @@ RUN apt-get update && \
       pv \
       python3 \
       python3-pip \
-      silversearcher-ag \
+      ripgrep \
       speedtest-cli \
       tmate \
       tree \
