@@ -18,14 +18,14 @@ BUILD_DATE      = $(shell date '+%F')
 RESTART        ?= always
 
 .PHONY: all
-all: build
+all: docker-build
 
 .PHONY: push
 push: ## Push built container to docker hub
 	docker push ${IMAGE_NAME}
 
 .PHONY: build
-build: ## Build the Dockerfile found in PWD
+docker-build: ## Build the Dockerfile found in PWD
 	docker build --no-cache=${NO_CACHE} \
 		-t "${IMAGE_NAME}:latest" \
 		-t "${IMAGE_NAME}:${GIT_BRANCH}-${GIT_SHA_SHORT}" \
@@ -44,7 +44,7 @@ install-hooks: ## Install git hooks
 	pre-commit install -f --install-hooks
 
 .PHONY: run
-run: build ## Build and run the Dockerfile in pwd
+docker-run: build ## Build and run the Dockerfile in pwd
 	docker run \
 		-d \
 		--restart=${RESTART} \
@@ -55,7 +55,7 @@ run: build ## Build and run the Dockerfile in pwd
 		${IMAGE_NAME}
 
 .PHONY: debug
-debug: build ## Build and debug the Dockerfile in pwd
+docker-debug: build ## Build and debug the Dockerfile in pwd
 	docker run \
 		--interactive \
 		--tty \
@@ -67,28 +67,28 @@ debug: build ## Build and debug the Dockerfile in pwd
 		${IMAGE_NAME} bash
 
 .PHONY: test
-test: ## Test that the container functions
+docker-test: ## Test that the container functions
 	docker run --rm -it ${IMAGE_NAME} fping localhost
 
 .PHONY: stop
-stop: ## Delete deployed container
+docker-stop: ## Delete deployed container
 	-docker stop ${CONTAINER_NAME}
 
 .PHONY: delete
-delete: rm
+docker-delete: rm
 .PHONY: rm
-rm: stop ## Delete deployed container
+docker-rm: stop ## Delete deployed container
 	-docker rm --force ${CONTAINER_NAME}
 	-docker rm --force ${CONTAINER_NAME}-debug
 
 .PHONY: pull
-pull: ## Pull the latest container
+docker-pull: ## Pull the latest container
 	docker pull $$(awk '/^FROM/ {print $$2 ; exit ;}' Dockerfile)
 	docker pull "${IMAGE_NAME}"
 
 .PHONY: logs
-logs: ## View the last 30 minutes of log entries
+docker-logs: ## View the last 30 minutes of log entries
 	docker logs --since 30m ${CONTAINER_NAME}
 
 .PHONY: bounce
-bounce: build rm run ## Rebuild, rm and run the Dockerfile
+docker-bounce: build rm run ## Rebuild, rm and run the Dockerfile
