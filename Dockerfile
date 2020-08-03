@@ -6,6 +6,7 @@ RUN apt-get update && \
     apt-get install -y \
       bc \
       bind9-host \
+      bsdmainutils \
       curl \
       dnsutils \
       fping \
