@@ -20,8 +20,8 @@ RESTART        ?= always
 .PHONY: all
 all: docker-build
 
-.PHONY: push
-push: ## Push built container to docker hub
+.PHONY: docker-push
+docker-push: ## Push built container to docker hub
 	docker push ${IMAGE_NAME}
 
 .PHONY: build
@@ -43,7 +43,7 @@ install-hooks: ## Install git hooks
 	pip install --user --upgrade pre-commit
 	pre-commit install -f --install-hooks
 
-.PHONY: run
+.PHONY: docker-run
 docker-run: build ## Build and run the Dockerfile in pwd
 	docker run \
 		-d \
@@ -54,7 +54,7 @@ docker-run: build ## Build and run the Dockerfile in pwd
 		--mount type=bind,src="${PWD}",dst="/data" \
 		${IMAGE_NAME}
 
-.PHONY: debug
+.PHONY: docker-debug
 docker-debug: build ## Build and debug the Dockerfile in pwd
 	docker run \
 		--interactive \
@@ -66,29 +66,29 @@ docker-debug: build ## Build and debug the Dockerfile in pwd
 		--mount type=bind,src="${PWD}",dst="/data" \
 		${IMAGE_NAME} bash
 
-.PHONY: test
+.PHONY: docker-test
 docker-test: ## Test that the container functions
 	docker run --rm -it ${IMAGE_NAME} fping localhost
 
-.PHONY: stop
+.PHONY: docker-stop
 docker-stop: ## Delete deployed container
 	-docker stop ${CONTAINER_NAME}
 
-.PHONY: delete
+.PHONY: docker-delete
 docker-delete: rm
-.PHONY: rm
+.PHONY: docker-rm
 docker-rm: stop ## Delete deployed container
 	-docker rm --force ${CONTAINER_NAME}
 	-docker rm --force ${CONTAINER_NAME}-debug
 
-.PHONY: pull
+.PHONY: docker-pull
 docker-pull: ## Pull the latest container
 	docker pull $$(awk '/^FROM/ {print $$2 ; exit ;}' Dockerfile)
 	docker pull "${IMAGE_NAME}"
 
-.PHONY: logs
+.PHONY: docker-logs
 docker-logs: ## View the last 30 minutes of log entries
 	docker logs --since 30m ${CONTAINER_NAME}
 
-.PHONY: bounce
+.PHONY: docker-bounce
 docker-bounce: build rm run ## Rebuild, rm and run the Dockerfile
