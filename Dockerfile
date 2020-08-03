@@ -17,11 +17,13 @@ RUN apt-get update && \
       make \
       mtr-tiny \
       net-tools \
+      openssh-client \
       pigz \
       pv \
       python3 \
       python3-pip \
       ripgrep \
+      rsync \
       speedtest-cli \
       tmate \
       tree \
