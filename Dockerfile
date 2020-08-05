@@ -39,3 +39,6 @@ RUN locale-gen en_US en_US.UTF-8 && \
 
 # Required for tmate
 RUN ssh-keygen -t ed25519 -f "$HOME"/.ssh/id_ed25519 -N ''
+
+RUN curl -sL https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz \
+    | tar -xz linux-amd64/helm --strip-components=1 -C /usr/local/bin/
