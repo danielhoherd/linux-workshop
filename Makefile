@@ -92,3 +92,7 @@ logs: ## View the last 30 minutes of log entries
 
 .PHONY: bounce
 bounce: build rm run ## Rebuild, rm and run the Dockerfile
+
+.PHONY: clean
+clean:
+	docker images | awk '$$1 == "${IMAGE_NAME}" {print $$3}' | sort -u | xargs -n1 docker rmi -f
