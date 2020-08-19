@@ -11,4 +11,4 @@ ${0##*/} [docker-image] [command]"
 
 if [ "${IMAGE}" == "-h" ] ; then usage ; exit 1 ; fi ;
 
-docker run --rm -t -i --mount type=bind,src="$PWD",dst="/docker-share" "${IMAGE:-danielhoherd/uw}" "${@:-bash}"
+docker run --rm -t -i --mount type=bind,src="$PWD",dst="/docker-share" "${IMAGE:-quay.io/repository/danielhoherd/uw}" "${@:-bash}"
