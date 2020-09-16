@@ -5,7 +5,7 @@ help: ## Print Makefile help
 	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' ${MAKEFILE_LIST} | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
 SUDO            = $(shell which sudo)
-IMAGE_NAME     ?= danielhoherd/uw
+IMAGE_NAME     ?= quay.io/danielhoherd/uw
 CONTAINER_NAME ?= ${IMAGE_NAME}
 NO_CACHE       ?= false
 ORG_PREFIX     ?= danielhoherd
