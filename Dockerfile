@@ -17,6 +17,7 @@ RUN apt-get update && \
       make \
       mtr-tiny \
       net-tools \
+      netcat \
       openssh-client \
       pigz \
       pv \
@@ -36,6 +37,8 @@ ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 RUN locale-gen en_US en_US.UTF-8 && \
     dpkg-reconfigure locales
+
+RUN pip3 install --no-cache-dir httpstat httpie
 
 # Required for tmate
 RUN ssh-keygen -t ed25519 -f "$HOME"/.ssh/id_ed25519 -N ''
