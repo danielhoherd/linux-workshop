@@ -21,6 +21,7 @@ RUN apt-get update && \
       openssh-client \
       pigz \
       pv \
+      python-is-python3 \
       python3 \
       python3-pip \
       ripgrep \
