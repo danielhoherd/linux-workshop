@@ -22,7 +22,7 @@ all: docker-build
 
 .PHONY: docker-push
 docker-push: ## Push built container to docker hub
-	docker push ${IMAGE_NAME}
+	docker push -a ${IMAGE_NAME}
 
 .PHONY: build
 docker-build: ## Build the Dockerfile found in PWD
