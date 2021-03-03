@@ -25,6 +25,8 @@ docker-push: ## Push built container to docker hub
 	docker push -a ${IMAGE_NAME}
 
 .PHONY: build
+build: docker-build
+.PHONY: docker-build
 docker-build: ## Build the Dockerfile found in PWD
 	docker build --no-cache=${NO_CACHE} \
 		-t "${IMAGE_NAME}:latest" \
