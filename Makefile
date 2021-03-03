@@ -14,14 +14,19 @@ GIT_BRANCH      = $(shell git rev-parse --abbrev-ref HEAD)
 GIT_SHA_SHORT   = $(shell if [ ! -z "`git status --porcelain`" ] ; then echo "DIRTY" ; else git rev-parse --short HEAD ; fi)
 GIT_SHA_LONG    = $(shell if [ ! -z "`git status --porcelain`" ] ; then echo "DIRTY" ; else git rev-parse HEAD ; fi)
 BUILD_TIME      = $(shell date '+%s')
-BUILD_DATE      = $(shell date '+%F')
+BUILD_DATE_F    = $(shell date '+%F')
+BUILD_DATE_Y_M  = $(shell date '+%Y-%m')
 RESTART        ?= always
 
 .PHONY: all
 all: docker-build
 
+.PHONY: clean-dirty
+clean-dirty: ## Delete DIRTY tags
+	docker images | awk '$$1 == "quay.io/danielhoherd/uw" && $$2 ~ /-DIRTY-/ {printf "%s:%s\n", $$1, $$2}' | xargs docker rmi
+
 .PHONY: docker-push
-docker-push: ## Push built container to docker hub
+docker-push: clean-dirty ## Push built container to docker hub
 	docker push -a ${IMAGE_NAME}
 
 .PHONY: build
@@ -30,9 +35,8 @@ build: docker-build
 docker-build: ## Build the Dockerfile found in PWD
 	docker build --no-cache=${NO_CACHE} \
 		-t "${IMAGE_NAME}:latest" \
-		-t "${IMAGE_NAME}:${GIT_BRANCH}-${GIT_SHA_SHORT}" \
-		-t "${IMAGE_NAME}:${BUILD_TIME}" \
-		-t "${IMAGE_NAME}:${BUILD_DATE}" \
+		-t "${IMAGE_NAME}:${GIT_BRANCH}-${GIT_SHA_SHORT}-${BUILD_DATE_F}" \
+		-t "${IMAGE_NAME}:${BUILD_DATE_Y_M}" \
 		--label "${ORG_PREFIX}.repo.origin=${GIT_ORIGIN}" \
 		--label "${ORG_PREFIX}.repo.branch=${GIT_BRANCH}" \
 		--label "${ORG_PREFIX}.repo.commit=${GIT_SHA_LONG}" \
