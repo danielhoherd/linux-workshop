@@ -23,7 +23,7 @@ all: docker-build
 
 .PHONY: clean-dirty
 clean-dirty: ## Delete DIRTY tags
-	docker images | awk '$$1 == "quay.io/danielhoherd/uw" && $$2 ~ /-DIRTY-/ {printf "%s:%s\n", $$1, $$2}' | xargs docker rmi
+	docker images | awk '$$1 == "quay.io/danielhoherd/uw" && $$2 ~ /-DIRTY-/ {printf "%s:%s\n", $$1, $$2}' | xargs -r docker rmi
 
 .PHONY: docker-push
 docker-push: clean-dirty ## Push built container to docker hub
@@ -101,4 +101,4 @@ docker-bounce: build rm run ## Rebuild, rm and run the Dockerfile
 
 .PHONY: clean
 clean:
-	docker images | awk '$$1 == "${IMAGE_NAME}" {print $$3}' | sort -u | xargs -n1 docker rmi -f
+	docker images | awk '$$1 == "${IMAGE_NAME}" {print $$3}' | sort -u | xargs -r -n1 docker rmi -f
