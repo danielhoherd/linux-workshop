@@ -37,6 +37,7 @@ docker-build: ## Build the Dockerfile found in PWD
 		-t "${IMAGE_NAME}:latest" \
 		-t "${IMAGE_NAME}:${GIT_BRANCH}-${GIT_SHA_SHORT}-${BUILD_DATE_F}" \
 		-t "${IMAGE_NAME}:${BUILD_DATE_Y_M}" \
+		--label quay.expires-after=13w \
 		--label "${ORG_PREFIX}.repo.origin=${GIT_ORIGIN}" \
 		--label "${ORG_PREFIX}.repo.branch=${GIT_BRANCH}" \
 		--label "${ORG_PREFIX}.repo.commit=${GIT_SHA_LONG}" \
