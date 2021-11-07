@@ -1,0 +1,78 @@
+---
+version: 2.1
+workflows:
+  lint:
+    jobs:
+      - run_pre_commit
+  build-and-push:
+    jobs:
+      - docker-build-and-push:
+          context:
+            - quay-push-danielhoherd
+
+  build-images-cron:
+    jobs:
+      - docker-build-and-push
+    triggers:
+      # Times are in UTC. Only simple cron syntax is supported. https://circleci.com/docs/2.0/workflows/#specifying-a-valid-schedule
+      - schedule:
+          cron: "19 7 * * 0" # At 07:19 on Sunday. https://crontab.guru/#19_7_*_*_0
+          filters:
+            branches:
+              only:
+                - main
+      - schedule:
+          cron: "27 10 1 * *" # At 10:27 on day-of-month 1. https://crontab.guru/#27_10_1_*_*
+          filters:
+            branches:
+              only:
+                - main
+
+jobs:
+  docker-build-and-push:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+          version: 20.10.7
+      - checkout
+      - run:
+          name: Docker info
+          command: |
+            set -x
+            docker info
+            docker version
+      - run:
+          name: docker login
+          command: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin quay.io
+      - run: make docker-build
+      - when:
+          condition:
+            equal: ["main", << pipeline.git.branch >>]
+          steps:
+            - run: make docker-push
+  run_pre_commit:
+    docker:
+      - image: quay.io/astronomer/ci-pre-commit:2021-11
+    steps:
+      - checkout
+      - run:
+          name: Create pre-commit-cache-key.txt
+          command: |
+            cp .pre-commit-config.yaml /tmp/pre-commit-cache-key.txt
+            python --version --version | sed 's/^/# /' >> /tmp/pre-commit-cache-key.txt
+      - restore_cache:
+          keys:
+            - pre-commit-cache-{{ checksum "/tmp/pre-commit-cache-key.txt" }}
+      - run:
+          name: Install pre-commit hooks
+          command: pre-commit install-hooks
+      - save_cache:
+          key: pre-commit-cache-{{ checksum "/tmp/pre-commit-cache-key.txt" }}
+          paths:
+            - ~/.cache/pre-commit
+      - run:
+          name: Run pre-commit
+          command: |
+            pre-commit run --all-files --show-diff-on-failure
