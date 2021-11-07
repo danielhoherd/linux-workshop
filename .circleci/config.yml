@@ -43,6 +43,7 @@ jobs:
           command: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin quay.io
       - run: make docker-build
       - run: make docker-inspect
+      - run: make show-packages
       - when:
           condition:
             equal: ["main", << pipeline.git.branch >>]

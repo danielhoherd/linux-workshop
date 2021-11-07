@@ -106,6 +106,10 @@ docker-info: ## Show info about docker
 docker-inspect: ## Inspect the built docker image
 	docker inspect "${IMAGE_NAME}:${GIT_BRANCH}-${GIT_SHA_SHORT}-${BUILD_DATE_F}"
 
+.PHONY: show-packages
+show-packages: ## Show list of packages installed in the built image
+	docker run -t --rm "${IMAGE_NAME}:${GIT_BRANCH}-${GIT_SHA_SHORT}-${BUILD_DATE_F}" /bin/bash -x -c "dpkg -l --no-pager ; pip freeze ;"
+
 .PHONY: docker-bounce
 docker-bounce: build rm run ## Rebuild, rm and run the Dockerfile
 
