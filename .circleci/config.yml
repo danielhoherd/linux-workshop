@@ -6,7 +6,9 @@ workflows:
       - run_pre_commit
   build-and-push:
     jobs:
-      - docker-build-and-push
+      - docker-build-and-push:
+          context:
+            - quay-push-danielhoherd
 
   build-images-cron:
     jobs:
