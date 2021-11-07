@@ -37,16 +37,12 @@ jobs:
           docker_layer_caching: true
           version: 20.10.7
       - checkout
-      - run:
-          name: Docker info
-          command: |
-            set -x
-            docker info
-            docker version
+      - run: make docker-info
       - run:
           name: docker login
           command: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin quay.io
       - run: make docker-build
+      - run: make docker-inspect
       - when:
           condition:
             equal: ["main", << pipeline.git.branch >>]

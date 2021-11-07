@@ -97,6 +97,15 @@ docker-pull: ## Pull the latest container
 docker-logs: ## View the last 30 minutes of log entries
 	docker logs --since 30m ${CONTAINER_NAME}
 
+.PHONY: docker-info
+docker-info: ## Show info about docker
+	docker info
+	docker version
+
+.PHONY: docker-inspect
+docker-inspect: ## Inspect the built docker image
+	docker inspect "${IMAGE_NAME}:${GIT_BRANCH}-${GIT_SHA_SHORT}-${BUILD_DATE_F}"
+
 .PHONY: docker-bounce
 docker-bounce: build rm run ## Rebuild, rm and run the Dockerfile
 
