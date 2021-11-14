@@ -12,7 +12,9 @@ workflows:
 
   build-images-cron:
     jobs:
-      - docker-build-and-push
+      - docker-build-and-push:
+          context:
+            - quay-push-danielhoherd
     triggers:
       # Times are in UTC. Only simple cron syntax is supported. https://circleci.com/docs/2.0/workflows/#specifying-a-valid-schedule
       - schedule:
