@@ -35,6 +35,7 @@ build: docker-build
 docker-build: ## Build the Dockerfile found in PWD
 	docker build --no-cache=${NO_CACHE} \
 		-t "${IMAGE_NAME}:latest" \
+		-t "${IMAGE_NAME}:${GIT_BRANCH}-${BUILD_DATE_F}" \
 		-t "${IMAGE_NAME}:${GIT_BRANCH}-${GIT_SHA_SHORT}-${BUILD_DATE_F}" \
 		-t "${IMAGE_NAME}:${BUILD_DATE_Y_M}" \
 		--label quay.expires-after=13w \
