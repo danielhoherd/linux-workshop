@@ -9,6 +9,7 @@ RUN apt-get update && \
       bsdmainutils \
       curl \
       dnsutils \
+      elinks \
       fping \
       git \
       iproute2 \
