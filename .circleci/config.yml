@@ -37,7 +37,7 @@ jobs:
     steps:
       - setup_remote_docker:
           docker_layer_caching: true
-          version: 20.10.7
+          version: 20.10.11
       - checkout
       - run: make docker-info
       - run:
@@ -53,7 +53,7 @@ jobs:
             - run: make docker-push
   run_pre_commit:
     docker:
-      - image: quay.io/astronomer/ci-pre-commit:2021-11
+      - image: quay.io/astronomer/ci-pre-commit:2022-03
     steps:
       - checkout
       - run:
