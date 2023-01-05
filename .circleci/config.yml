@@ -37,7 +37,7 @@ jobs:
     steps:
       - setup_remote_docker:
           docker_layer_caching: true
-          version: 20.10.11
+          version: 20.10.18 # https://circleci.com/docs/building-docker-images/#docker-version
       - checkout
       - run: make docker-info
       - run:
@@ -53,7 +53,7 @@ jobs:
             - run: make docker-push
   run_pre_commit:
     docker:
-      - image: quay.io/astronomer/ci-pre-commit:2022-09
+      - image: quay.io/astronomer/ci-pre-commit:2023-01
     steps:
       - checkout
       - run:
