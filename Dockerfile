@@ -28,6 +28,7 @@ RUN apt-get update && \
       ripgrep \
       rsync \
       speedtest-cli \
+      tcpdump \
       tmate \
       tree \
       vim \
