@@ -47,5 +47,5 @@ RUN pip3 install --no-cache-dir httpstat httpie
 RUN ssh-keygen -t ed25519 -f "$HOME"/.ssh/id_ed25519 -N ''
 
 RUN cd /usr/local/bin && \
-    curl -sL https://get.helm.sh/helm-v3.7.2-linux-amd64.tar.gz | \
+    curl -sL https://get.helm.sh/helm-v3.12.2-linux-amd64.tar.gz | \
     tar -xz linux-amd64/helm --strip-components=1
