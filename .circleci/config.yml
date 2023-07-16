@@ -53,7 +53,7 @@ jobs:
             - run: make docker-push
   run_pre_commit:
     docker:
-      - image: quay.io/astronomer/ci-pre-commit:2023-01
+      - image: quay.io/astronomer/ci-pre-commit:2023-07
     steps:
       - checkout
       - run:
