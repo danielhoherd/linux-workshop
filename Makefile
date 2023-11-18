@@ -5,7 +5,7 @@ help: ## Print Makefile help
 	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' ${MAKEFILE_LIST} | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
 SUDO            = $(shell which sudo)
-IMAGE_NAME     ?= quay.io/danielhoherd/uw
+IMAGE_NAME     ?= quay.io/danielhoherd/dw
 CONTAINER_NAME ?= ${IMAGE_NAME}
 NO_CACHE       ?= false
 ORG_PREFIX     ?= danielhoherd
@@ -23,7 +23,7 @@ all: docker-build
 
 .PHONY: clean-dirty
 clean-dirty: ## Delete DIRTY tags
-	docker images | awk '$$1 == "quay.io/danielhoherd/uw" && $$2 ~ /-DIRTY-/ {printf "%s:%s\n", $$1, $$2}' | xargs -r docker rmi
+	docker images | awk '$$1 == "quay.io/danielhoherd/dw" && $$2 ~ /-DIRTY-/ {printf "%s:%s\n", $$1, $$2}' | xargs -r docker rmi
 
 .PHONY: docker-push
 docker-push: clean-dirty ## Push built container to docker hub

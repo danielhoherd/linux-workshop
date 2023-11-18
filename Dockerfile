@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM debian:12
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
@@ -34,7 +34,8 @@ RUN apt-get update && \
       vim \
       wget \
       xtail && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    rm -fv /usr/lib/python3.11/EXTERNALLY-MANAGED
 
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
