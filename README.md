@@ -1,12 +1,12 @@
-# Ubuntu Workstation (uw)
+# Debian Workstation (dw)
 
-A simple Ubuntu image with some additional packages installed.
+A simple Debian image with some additional packages installed.
 
-- <https://quay.io/repository/danielhoherd/uw>
-- <https://github.com/danielhoherd/ubuntu-workstation>
+- <https://quay.io/repository/danielhoherd/dw>
+- <https://github.com/danielhoherd/debian-workstation>
 
 # Usage
 
 ```
-docker run -ti --rm quay.io/repository/danielhoherd/uw /bin/bash
+docker run -ti --rm quay.io/repository/danielhoherd/dw /bin/bash
 ```
