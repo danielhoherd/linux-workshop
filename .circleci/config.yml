@@ -32,6 +32,9 @@ workflows:
 
 jobs:
   docker-build-and-push:
+    parameters:
+      distro:
+        type: string
     docker:
       - image: cimg/base:stable
     steps:
@@ -42,14 +45,14 @@ jobs:
       - run:
           name: docker login
           command: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin quay.io
-      - run: make docker-build
-      - run: make docker-inspect
-      - run: make show-packages
+      - run: make docker-build DISTRO=$<< parameters.distro >>
+      - run: make docker-inspect DISTRO=$<< parameters.distro >>
+      - run: make show-packages DISTRO=$<< parameters.distro >>
       - when:
           condition:
             equal: ["main", << pipeline.git.branch >>]
           steps:
-            - run: make docker-push
+            - run: make docker-push DISTRO=$<< parameters.distro >>
   run_pre_commit:
     docker:
       - image: quay.io/astronomer/ci-pre-commit:2024-02
