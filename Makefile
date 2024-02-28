@@ -52,7 +52,7 @@ install-hooks: ## Install git hooks
 	pre-commit install -f --install-hooks
 
 .PHONY: docker-run
-docker-run: build ## Build and run the Dockerfile in pwd
+docker-run: build ## Build and run the Dockerfile in PWD
 	docker run \
 		-d \
 		--restart=${RESTART} \
@@ -63,7 +63,7 @@ docker-run: build ## Build and run the Dockerfile in pwd
 		${IMAGE_NAME}
 
 .PHONY: docker-debug
-docker-debug: build ## Build and debug the Dockerfile in pwd
+docker-debug: build ## Build and debug the Dockerfile in PWD
 	docker run \
 		--interactive \
 		--tty \
