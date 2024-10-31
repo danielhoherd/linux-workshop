@@ -37,11 +37,6 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     rm -fv /usr/lib/python3.11/EXTERNALLY-MANAGED
 
-ENV LC_ALL=en_US.UTF-8
-ENV LANG=en_US.UTF-8
-RUN locale-gen en_US en_US.UTF-8 && \
-    dpkg-reconfigure locales
-
 RUN pip3 install --no-cache-dir httpstat httpie
 
 # Required for tmate
