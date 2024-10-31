@@ -1,4 +1,4 @@
-# Debian Workstation (dw)
+# Linux Workshop (lw)
 
 Linux images with additional packages installed that let you quickly get to work doing useful things.
 
@@ -8,5 +8,5 @@ Linux images with additional packages installed that let you quickly get to work
 # Usage
 
 ```
-docker run -ti --rm quay.io/repository/danielhoherd/lw:debian /bin/bash
+docker run -ti --rm quay.io/danielhoherd/lw:debian /bin/bash
 ```
