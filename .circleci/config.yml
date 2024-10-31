@@ -4,17 +4,18 @@ workflows:
   lint:
     jobs:
       - run_pre_commit
-  build-and-push:
+  build-and-push: &build_and_push_job
     jobs:
       - docker-build-and-push:
           context:
             - quay-push-danielhoherd
-
-  build-images-cron:
-    jobs:
-      - docker-build-and-push:
-          context:
-            - quay-push-danielhoherd
+          matrix:
+            parameters:
+              distro:
+                - debian
+                - ubuntu
+  build-and-push-cron:
+    <<: *build_and_push_job
     triggers:
       # Times are in UTC. Only simple cron syntax is supported. https://circleci.com/docs/2.0/workflows/#specifying-a-valid-schedule
       - schedule:
@@ -32,28 +33,29 @@ workflows:
 
 jobs:
   docker-build-and-push:
+    parameters:
+      distro:
+        type: string
     docker:
       - image: cimg/base:stable
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
-          version: 20.10.18 # https://circleci.com/docs/building-docker-images/#docker-version
+      - setup_remote_docker
       - checkout
       - run: make docker-info
       - run:
           name: docker login
           command: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin quay.io
-      - run: make docker-build
-      - run: make docker-inspect
-      - run: make show-packages
+      - run: make docker-build DISTRO=<< parameters.distro >>
+      - run: make docker-inspect DISTRO=<< parameters.distro >>
+      - run: make show-packages DISTRO=<< parameters.distro >>
       - when:
           condition:
             equal: ["main", << pipeline.git.branch >>]
           steps:
-            - run: make docker-push
+            - run: make docker-push DISTRO=<< parameters.distro >>
   run_pre_commit:
     docker:
-      - image: quay.io/astronomer/ci-pre-commit:2023-08
+      - image: quay.io/astronomer/ci-pre-commit:2024-11
     steps:
       - checkout
       - run:
