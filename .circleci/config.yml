@@ -60,7 +60,7 @@ jobs:
       - checkout
       - run:
           name: Create pre-commit-cache-key.txt
-          command: |
+          command: |-
             cp .pre-commit-config.yaml /tmp/pre-commit-cache-key.txt
             python --version --version | sed 's/^/# /' >> /tmp/pre-commit-cache-key.txt
       - restore_cache:
@@ -68,12 +68,13 @@ jobs:
             - pre-commit-cache-{{ checksum "/tmp/pre-commit-cache-key.txt" }}
       - run:
           name: Install pre-commit hooks
-          command: pre-commit install-hooks
+          command: |-
+            pre-commit install-hooks
       - save_cache:
           key: pre-commit-cache-{{ checksum "/tmp/pre-commit-cache-key.txt" }}
           paths:
             - ~/.cache/pre-commit
       - run:
           name: Run pre-commit
-          command: |
+          command: |-
             pre-commit run --all-files --show-diff-on-failure
