@@ -14,7 +14,9 @@ RUN apt-get update && \
       git \
       iproute2 \
       iputils-ping \
+      less \
       locales \
+      lsof \
       make \
       mtr-tiny \
       net-tools \
@@ -29,6 +31,7 @@ RUN apt-get update && \
       rsync \
       speedtest-cli \
       tcpdump \
+      tcpflow \
       tmate \
       tree \
       vim \
