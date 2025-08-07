@@ -21,8 +21,9 @@ RUN apt-get update && \
       net-tools \
       netcat-openbsd \
       openssh-client \
-      procps \
       pigz \
+      procps \
+      psmisc \
       pv \
       python-is-python3 \
       python3 \
