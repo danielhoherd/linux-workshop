@@ -1,4 +1,6 @@
-FROM debian:12
+# trixie is 13
+FROM debian:trixie
+#FROM debian:12
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
@@ -41,7 +43,7 @@ RUN apt-get update && \
       wget \
       xtail && \
     rm -rf /var/lib/apt/lists/* && \
-    rm -fv /usr/lib/python3.11/EXTERNALLY-MANAGED
+    rm -fv /usr/lib/python3*/EXTERNALLY-MANAGED
 
 RUN pip3 install --no-cache-dir httpstat httpie
 
