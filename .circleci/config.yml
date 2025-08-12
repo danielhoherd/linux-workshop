@@ -39,12 +39,17 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: edge # https://circleci.com/docs/building-docker-images/#docker-version
       - checkout
       - run:
           name: docker login
           command: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin quay.io
-      - run: make docker-build-and-push DISTRO=<< parameters.distro >>
+      - run:
+          command: |
+            docker info
+            docker version
+            make docker-build-and-push DISTRO=<< parameters.distro >>
   run_pre_commit:
     docker:
       - image: quay.io/astronomer/ci-pre-commit:2025-08
