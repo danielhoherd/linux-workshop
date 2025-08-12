@@ -13,7 +13,6 @@ RUN apt-get update && \
       elinks \
       fping \
       git \
-      htop \
       iproute2 \
       iputils-ping \
       locales \
@@ -23,8 +22,6 @@ RUN apt-get update && \
       netcat-openbsd \
       openssh-client \
       pigz \
-      procps \
-      psmisc \
       pv \
       python-is-python3 \
       python3 \

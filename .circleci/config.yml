@@ -41,21 +41,13 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: make docker-info
       - run:
           name: docker login
           command: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin quay.io
-      - run: make docker-build DISTRO=<< parameters.distro >>
-      - run: make docker-inspect DISTRO=<< parameters.distro >>
-      - run: make show-packages DISTRO=<< parameters.distro >>
-      - when:
-          condition:
-            equal: ["main", << pipeline.git.branch >>]
-          steps:
-            - run: make docker-push DISTRO=<< parameters.distro >>
+      - run: make docker-build-and-push DISTRO=<< parameters.distro >>
   run_pre_commit:
     docker:
-      - image: quay.io/astronomer/ci-pre-commit:2024-11
+      - image: quay.io/astronomer/ci-pre-commit:2025-08
     steps:
       - checkout
       - run:

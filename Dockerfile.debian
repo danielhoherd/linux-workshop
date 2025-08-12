@@ -1,12 +1,9 @@
-# trixie is 13
-FROM debian:trixie
-#FROM debian:12
+FROM debian:12
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get install --no-install-recommends -y \
-      asciinema \
       bc \
       bind9-host \
       bsdmainutils \
@@ -15,7 +12,6 @@ RUN apt-get update && \
       elinks \
       fping \
       git \
-      htop \
       iproute2 \
       iputils-ping \
       less \
@@ -27,8 +23,6 @@ RUN apt-get update && \
       netcat-openbsd \
       openssh-client \
       pigz \
-      procps \
-      psmisc \
       pv \
       python-is-python3 \
       python3 \
@@ -44,7 +38,7 @@ RUN apt-get update && \
       wget \
       xtail && \
     rm -rf /var/lib/apt/lists/* && \
-    rm -fv /usr/lib/python3*/EXTERNALLY-MANAGED
+    rm -fv /usr/lib/python3.11/EXTERNALLY-MANAGED
 
 RUN pip3 install --no-cache-dir httpstat httpie
 
