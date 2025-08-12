@@ -49,14 +49,14 @@ docker-build-and-push: ## Build the Dockerfile found in PWD for multiple archite
 			--os linux \
 			--arch amd64
 
-	docker tag \
-		"${IMAGE_NAME}:${DISTRO}" \
-		"${IMAGE_NAME}:${DISTRO}-latest" \
-		"${IMAGE_NAME}:${DISTRO}-${BUILD_DATE_Y_M}" \
-		"${IMAGE_NAME}:${DISTRO}-${BUILD_DATE_F}" \
-		"${IMAGE_NAME}:${DISTRO}-${GIT_SHA_SHORT}" \
+	docker tag "${IMAGE_NAME}:${DISTRO}" "${IMAGE_NAME}:${DISTRO}-latest"
+	docker tag "${IMAGE_NAME}:${DISTRO}" "${IMAGE_NAME}:${DISTRO}-${BUILD_DATE_Y_M}"
+	docker tag "${IMAGE_NAME}:${DISTRO}" "${IMAGE_NAME}:${DISTRO}-${BUILD_DATE_F}"
+	docker tag "${IMAGE_NAME}:${DISTRO}" "${IMAGE_NAME}:${DISTRO}-${GIT_SHA_SHORT}"
 
 	docker manifest push "${IMAGE_NAME}:${DISTRO}"
+	docker images | awk '$2 ~ /-DIRTY/ {printf "%s:%s\n", $1, $2}' | xargs -n1 docker rmi
+	docker push --all-tags "${IMAGE_NAME}"
 
 .PHONY: clean
 clean:
