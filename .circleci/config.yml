@@ -37,7 +37,7 @@ jobs:
       distro:
         type: string
     docker:
-      - image: cimg/base:stable
+      - image: cimg/base:edge
     steps:
       - setup_remote_docker:
           version: edge # https://circleci.com/docs/building-docker-images/#docker-version
